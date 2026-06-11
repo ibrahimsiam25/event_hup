@@ -2,6 +2,18 @@
 class Assets {
   Assets._();
   
+  /// Assets for imagesPngFacebook
+  /// assets/images/png/facebook.png
+  static const String imagesPngFacebook = "assets/images/png/facebook.png";
+
+  /// Assets for imagesPngGoogle
+  /// assets/images/png/google.png
+  static const String imagesPngGoogle = "assets/images/png/google.png";
+
+  /// Assets for imagesPngLogo
+  /// assets/images/png/logo.png
+  static const String imagesPngLogo = "assets/images/png/logo.png";
+
   /// Assets for imagesPngNoInternet
   /// assets/images/png/NoInternet.webp
   static const String imagesPngNoInternet = "assets/images/png/NoInternet.webp";

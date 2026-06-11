@@ -58,8 +58,9 @@ flutter:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/png/app_icon.png"
-
+  image_path: "assets/images/png/logo.png"
+  background_color: "#FFFFFF"
+  
 flutter_intl:
   enabled: true
 flutter_assets:
