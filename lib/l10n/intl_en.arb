@@ -24,5 +24,7 @@
   "invalidPassword": "Password must be at least 8 characters and contain both letters and numbers",
   "fullNameRequired": "Please enter your full name",
   "confirmPasswordRequired": "Please confirm your password",
-  "passwordsDoNotMatch": "Passwords do not match"
+  "passwordsDoNotMatch": "Passwords do not match",
+  "eventDetails": "Event Details",
+  "follow":"Follow"
 }

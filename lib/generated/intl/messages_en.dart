@@ -38,7 +38,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "emailRequired": MessageLookupByLibrary.simpleMessage(
       "Please enter your email",
     ),
+    "eventDetails": MessageLookupByLibrary.simpleMessage("Event Details"),
     "eventHub": MessageLookupByLibrary.simpleMessage("EventHub"),
+    "follow": MessageLookupByLibrary.simpleMessage("Follow"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
     "fullNameHint": MessageLookupByLibrary.simpleMessage("Full name"),
     "fullNameRequired": MessageLookupByLibrary.simpleMessage(

@@ -253,6 +253,21 @@ class S {
       args: [],
     );
   }
+
+  /// `Event Details`
+  String get eventDetails {
+    return Intl.message(
+      'Event Details',
+      name: 'eventDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Follow`
+  String get follow {
+    return Intl.message('Follow', name: 'follow', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

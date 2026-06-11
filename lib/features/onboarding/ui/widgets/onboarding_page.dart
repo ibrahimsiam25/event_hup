@@ -12,7 +12,7 @@ class OnboardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Upper section with phone mockup (placed directly above the blue card)
+    
         Positioned(
           top: 20,
           left: 0,
@@ -22,7 +22,7 @@ class OnboardingPage extends StatelessWidget {
             child: PhoneMockup(imagePath: page.imagePath),
           ),
         ),
-        // Lower blue section with rounded top corners
+    
         Positioned(
           left: 0,
           right: 0,
