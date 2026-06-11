@@ -26,5 +26,11 @@
   "confirmPasswordRequired": "Please confirm your password",
   "passwordsDoNotMatch": "Passwords do not match",
   "eventDetails": "Event Details",
-  "follow":"Follow"
+  "follow":"Follow",
+   "noUpcomingEvent": "No Upcoming Event",
+  "noUpcomingEventDescription": "Lorem ipsum dolor sit amet,\n consectetur",
+  "exploreEvents": "Explore Events",
+  "events": "Events",
+   "upcoming": "Upcoming",
+  "pastEvents": "Past Events"
 }

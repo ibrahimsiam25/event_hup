@@ -22,6 +22,10 @@ class Assets {
   /// assets/images/png/NoInternet.webp
   static const String imagesPngNoInternet = "assets/images/png/NoInternet.webp";
 
+  /// Assets for imagesPngNoUpcomingEvent
+  /// assets/images/png/NoUpcomingEvent.png
+  static const String imagesPngNoUpcomingEvent = "assets/images/png/NoUpcomingEvent.png";
+
   /// Assets for imagesPngOnboarding1
   /// assets/images/png/onboarding_1.png
   static const String imagesPngOnboarding1 = "assets/images/png/onboarding_1.png";

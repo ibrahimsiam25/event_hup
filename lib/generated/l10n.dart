@@ -268,6 +268,51 @@ class S {
   String get follow {
     return Intl.message('Follow', name: 'follow', desc: '', args: []);
   }
+
+  /// `No Upcoming Event`
+  String get noUpcomingEvent {
+    return Intl.message(
+      'No Upcoming Event',
+      name: 'noUpcomingEvent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lorem ipsum dolor sit amet,\n consectetur`
+  String get noUpcomingEventDescription {
+    return Intl.message(
+      'Lorem ipsum dolor sit amet,\n consectetur',
+      name: 'noUpcomingEventDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Explore Events`
+  String get exploreEvents {
+    return Intl.message(
+      'Explore Events',
+      name: 'exploreEvents',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Events`
+  String get events {
+    return Intl.message('Events', name: 'events', desc: '', args: []);
+  }
+
+  /// `Upcoming`
+  String get upcoming {
+    return Intl.message('Upcoming', name: 'upcoming', desc: '', args: []);
+  }
+
+  /// `Past Events`
+  String get pastEvents {
+    return Intl.message('Past Events', name: 'pastEvents', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

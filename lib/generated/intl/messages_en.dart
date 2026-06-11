@@ -40,6 +40,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "eventDetails": MessageLookupByLibrary.simpleMessage("Event Details"),
     "eventHub": MessageLookupByLibrary.simpleMessage("EventHub"),
+    "events": MessageLookupByLibrary.simpleMessage("Events"),
+    "exploreEvents": MessageLookupByLibrary.simpleMessage("Explore Events"),
     "follow": MessageLookupByLibrary.simpleMessage("Follow"),
     "forgotPassword": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
     "fullNameHint": MessageLookupByLibrary.simpleMessage("Full name"),
@@ -59,6 +61,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Login with Google",
     ),
     "next": MessageLookupByLibrary.simpleMessage("Next"),
+    "noUpcomingEvent": MessageLookupByLibrary.simpleMessage(
+      "No Upcoming Event",
+    ),
+    "noUpcomingEventDescription": MessageLookupByLibrary.simpleMessage(
+      "Lorem ipsum dolor sit amet,\n consectetur",
+    ),
     "or": MessageLookupByLibrary.simpleMessage("OR"),
     "passwordHint": MessageLookupByLibrary.simpleMessage("Your password"),
     "passwordRequired": MessageLookupByLibrary.simpleMessage(
@@ -67,6 +75,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "passwordsDoNotMatch": MessageLookupByLibrary.simpleMessage(
       "Passwords do not match",
     ),
+    "pastEvents": MessageLookupByLibrary.simpleMessage("Past Events"),
     "rememberMe": MessageLookupByLibrary.simpleMessage("Remember Me"),
     "signIn": MessageLookupByLibrary.simpleMessage("Sign in"),
     "signInAction": MessageLookupByLibrary.simpleMessage("Sign in"),
@@ -74,5 +83,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "signUp": MessageLookupByLibrary.simpleMessage("Sign up"),
     "signUpButton": MessageLookupByLibrary.simpleMessage("SIGN UP"),
     "skip": MessageLookupByLibrary.simpleMessage("Skip"),
+    "upcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
   };
 }
