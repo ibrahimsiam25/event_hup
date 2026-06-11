@@ -12,6 +12,7 @@ dependencies:
   cached_network_image: ^3.4.1
   connectivity_plus: ^7.1.1
   cupertino_icons: ^1.0.8
+  email_validator: ^3.0.0
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
@@ -60,7 +61,7 @@ flutter_launcher_icons:
   ios: true
   image_path: "assets/images/png/logo.png"
   background_color: "#FFFFFF"
-  
+
 flutter_intl:
   enabled: true
 flutter_assets:

@@ -22,7 +22,55 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "next": MessageLookupByLibrary.simpleMessage("Next"),
-        "skip": MessageLookupByLibrary.simpleMessage("Skip")
-      };
+    "alreadyHaveAccount": MessageLookupByLibrary.simpleMessage(
+      "Already have an account?",
+    ),
+    "confirmPasswordHint": MessageLookupByLibrary.simpleMessage(
+      "Confirm password",
+    ),
+    "confirmPasswordRequired": MessageLookupByLibrary.simpleMessage(
+      "Please confirm your password",
+    ),
+    "dontHaveAccount": MessageLookupByLibrary.simpleMessage(
+      "Don\'t have an account?",
+    ),
+    "emailHint": MessageLookupByLibrary.simpleMessage("abc@email.com"),
+    "emailRequired": MessageLookupByLibrary.simpleMessage(
+      "Please enter your email",
+    ),
+    "eventHub": MessageLookupByLibrary.simpleMessage("EventHub"),
+    "forgotPassword": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
+    "fullNameHint": MessageLookupByLibrary.simpleMessage("Full name"),
+    "fullNameRequired": MessageLookupByLibrary.simpleMessage(
+      "Please enter your full name",
+    ),
+    "invalidEmail": MessageLookupByLibrary.simpleMessage(
+      "Please enter a valid email",
+    ),
+    "invalidPassword": MessageLookupByLibrary.simpleMessage(
+      "Password must be at least 8 characters and contain both letters and numbers",
+    ),
+    "loginWithFacebook": MessageLookupByLibrary.simpleMessage(
+      "Login with Facebook",
+    ),
+    "loginWithGoogle": MessageLookupByLibrary.simpleMessage(
+      "Login with Google",
+    ),
+    "next": MessageLookupByLibrary.simpleMessage("Next"),
+    "or": MessageLookupByLibrary.simpleMessage("OR"),
+    "passwordHint": MessageLookupByLibrary.simpleMessage("Your password"),
+    "passwordRequired": MessageLookupByLibrary.simpleMessage(
+      "Please enter your password",
+    ),
+    "passwordsDoNotMatch": MessageLookupByLibrary.simpleMessage(
+      "Passwords do not match",
+    ),
+    "rememberMe": MessageLookupByLibrary.simpleMessage("Remember Me"),
+    "signIn": MessageLookupByLibrary.simpleMessage("Sign in"),
+    "signInAction": MessageLookupByLibrary.simpleMessage("Sign in"),
+    "signInButton": MessageLookupByLibrary.simpleMessage("SIGN IN"),
+    "signUp": MessageLookupByLibrary.simpleMessage("Sign up"),
+    "signUpButton": MessageLookupByLibrary.simpleMessage("SIGN UP"),
+    "skip": MessageLookupByLibrary.simpleMessage("Skip"),
+  };
 }

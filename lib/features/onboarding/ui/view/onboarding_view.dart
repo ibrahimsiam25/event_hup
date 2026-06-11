@@ -4,6 +4,11 @@ import 'package:event_hup/features/onboarding/ui/widgets/onboarding_page.dart';
 import 'package:flutter/material.dart';
 import '../../model/onboarding_model.dart';
 
+import 'package:event_hup/core/helpers/app_constants.dart';
+import 'package:event_hup/core/helpers/shared_pref_helper.dart';
+import 'package:event_hup/features/auth/ui/views/sign_in_view.dart';
+import 'package:go_router/go_router.dart';
+
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
   static const  routerPath = '/onboarding';
@@ -15,6 +20,11 @@ class _OnboardingScreenState extends State<OnboardingView> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
 
+  void _completeOnboarding() {
+    SharedPrefHelper.setData(AppConstants.prefsIsNotFirstLogin, true);
+    context.go(SignInView.routerPath);
+  }
+
   void _onNext() {
     if (_currentIndex < onboardingPages.length - 1) {
       _pageController.nextPage(
@@ -22,16 +32,12 @@ class _OnboardingScreenState extends State<OnboardingView> {
         curve: Curves.easeInOut,
       );
     } else {
-
+      _completeOnboarding();
     }
   }
 
   void _onSkip() {
-    _pageController.animateToPage(
-      onboardingPages.length - 1,
-      duration: const Duration(milliseconds: 400),
-      curve: Curves.easeInOut,
-    );
+    _completeOnboarding();
   }
 
   @override
