@@ -1,7 +1,8 @@
 import 'package:event_hup/features/auth/ui/views/sign_in_view.dart';
 import 'package:event_hup/features/auth/ui/views/sign_up_view.dart';
-import 'package:event_hup/features/home/ui/views/event_details_view.dart';
-import 'package:event_hup/features/home/ui/views/events_view.dart';
+import 'package:event_hup/features/event/ui/view/event_details_view.dart';
+import 'package:event_hup/features/event/ui/view/events_view.dart';
+import 'package:event_hup/features/home/ui/views/bottom_nav_bar_view.dart';
 import 'package:event_hup/features/onboarding/ui/view/onboarding_view.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,8 +24,13 @@ class RoutesList {
       path: EventDetailsView.routerPath,
       builder: (context, state) => EventDetailsView(),
     ),
-    GoRoute(path: EventsView.routerPath,
-              builder: (context, state) => EventsView(),
-    )
+    GoRoute(
+      path: EventsView.routerPath,
+      builder: (context, state) => const EventsView(),
+    ),
+    GoRoute(
+      path: BottomNavBarView.routerPath,
+      builder: (context, state) => const BottomNavBarView(),
+    ),
   ];
 }

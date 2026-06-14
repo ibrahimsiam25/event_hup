@@ -1,7 +1,7 @@
-import 'package:event_hup/features/home/ui/widgets/empty_events_view.dart';
-import 'package:event_hup/features/home/ui/widgets/event_app_bar.dart';
-import 'package:event_hup/features/home/ui/widgets/events_list.dart';
-import 'package:event_hup/features/home/ui/widgets/events_tabs.dart';
+import 'package:event_hup/features/event/ui/widgets/empty_events_view.dart';
+import 'package:event_hup/features/event/ui/widgets/event_app_bar.dart';
+import 'package:event_hup/features/event/ui/widgets/events_list.dart';
+import 'package:event_hup/features/event/ui/widgets/events_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

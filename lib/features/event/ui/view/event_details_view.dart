@@ -1,5 +1,5 @@
 import 'package:event_hup/core/themes/app_colors.dart';
-import 'package:event_hup/features/home/ui/widgets/event_details_view_body.dart';
+import 'package:event_hup/features/event/ui/widgets/event_details_view_body.dart';
 import 'package:flutter/material.dart';
 
 

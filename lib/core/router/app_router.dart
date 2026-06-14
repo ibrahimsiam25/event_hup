@@ -1,9 +1,6 @@
 import 'package:event_hup/core/helpers/logger.dart';
 import 'package:event_hup/core/router/routes_list.dart';
-import 'package:event_hup/features/auth/ui/views/sign_in_view.dart';
-import 'package:event_hup/features/home/ui/views/event_details_view.dart';
-import 'package:event_hup/features/home/ui/views/events_view.dart';
-import 'package:event_hup/features/onboarding/ui/view/onboarding_view.dart';
+import 'package:event_hup/features/home/ui/views/bottom_nav_bar_view.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRouter {
@@ -30,6 +27,6 @@ abstract class AppRouter {
     // if (isNotFirstLogin) {
     //   return SignInView.routerPath;
     // }
-    return EventsView.routerPath;
+    return BottomNavBarView.routerPath;
   }
 }

@@ -313,6 +313,341 @@ class S {
   String get pastEvents {
     return Intl.message('Past Events', name: 'pastEvents', desc: '', args: []);
   }
+
+  /// `Search...`
+  String get searchHint {
+    return Intl.message('Search...', name: 'searchHint', desc: '', args: []);
+  }
+
+  /// `Filters`
+  String get filters {
+    return Intl.message('Filters', name: 'filters', desc: '', args: []);
+  }
+
+  /// `Sports`
+  String get sports {
+    return Intl.message('Sports', name: 'sports', desc: '', args: []);
+  }
+
+  /// `Music`
+  String get music {
+    return Intl.message('Music', name: 'music', desc: '', args: []);
+  }
+
+  /// `Food`
+  String get food {
+    return Intl.message('Food', name: 'food', desc: '', args: []);
+  }
+
+  /// `Art`
+  String get art {
+    return Intl.message('Art', name: 'art', desc: '', args: []);
+  }
+
+  /// `Upcoming Events`
+  String get upcomingEvents {
+    return Intl.message(
+      'Upcoming Events',
+      name: 'upcomingEvents',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See All`
+  String get seeAll {
+    return Intl.message('See All', name: 'seeAll', desc: '', args: []);
+  }
+
+  /// `Going`
+  String get going {
+    return Intl.message('Going', name: 'going', desc: '', args: []);
+  }
+
+  /// `Invite your friends`
+  String get inviteFriends {
+    return Intl.message(
+      'Invite your friends',
+      name: 'inviteFriends',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get $20 for ticket`
+  String get get20ForTicket {
+    return Intl.message(
+      'Get \$20 for ticket',
+      name: 'get20ForTicket',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `INVITE`
+  String get invite {
+    return Intl.message('INVITE', name: 'invite', desc: '', args: []);
+  }
+
+  /// `Nearby You`
+  String get nearbyYou {
+    return Intl.message('Nearby You', name: 'nearbyYou', desc: '', args: []);
+  }
+
+  /// `Explore`
+  String get explore {
+    return Intl.message('Explore', name: 'explore', desc: '', args: []);
+  }
+
+  /// `Map`
+  String get map {
+    return Intl.message('Map', name: 'map', desc: '', args: []);
+  }
+
+  /// `Profile`
+  String get profile {
+    return Intl.message('Profile', name: 'profile', desc: '', args: []);
+  }
+
+  /// `Current Location`
+  String get currentLocation {
+    return Intl.message(
+      'Current Location',
+      name: 'currentLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New York, USA`
+  String get newYorkUSA {
+    return Intl.message(
+      'New York, USA',
+      name: 'newYorkUSA',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Explore Map`
+  String get exploreMap {
+    return Intl.message('Explore Map', name: 'exploreMap', desc: '', args: []);
+  }
+
+  /// `Search for events...`
+  String get searchForEvents {
+    return Intl.message(
+      'Search for events...',
+      name: 'searchForEvents',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Past`
+  String get pastLabel {
+    return Intl.message('Past', name: 'pastLabel', desc: '', args: []);
+  }
+
+  /// `Followers`
+  String get followers {
+    return Intl.message('Followers', name: 'followers', desc: '', args: []);
+  }
+
+  /// `My Events`
+  String get myEvents {
+    return Intl.message('My Events', name: 'myEvents', desc: '', args: []);
+  }
+
+  /// `Bookmarked Events`
+  String get bookmarkedEvents {
+    return Intl.message(
+      'Bookmarked Events',
+      name: 'bookmarkedEvents',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notifications`
+  String get notifications {
+    return Intl.message(
+      'Notifications',
+      name: 'notifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get settings {
+    return Intl.message('Settings', name: 'settings', desc: '', args: []);
+  }
+
+  /// `Create New Event`
+  String get createNewEvent {
+    return Intl.message(
+      'Create New Event',
+      name: 'createNewEvent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Event Title`
+  String get eventTitle {
+    return Intl.message('Event Title', name: 'eventTitle', desc: '', args: []);
+  }
+
+  /// `Date & Time`
+  String get dateTime {
+    return Intl.message('Date & Time', name: 'dateTime', desc: '', args: []);
+  }
+
+  /// `Location`
+  String get location {
+    return Intl.message('Location', name: 'location', desc: '', args: []);
+  }
+
+  /// `CREATE EVENT`
+  String get createEvent {
+    return Intl.message(
+      'CREATE EVENT',
+      name: 'createEvent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Event created successfully!`
+  String get eventCreatedSuccessfully {
+    return Intl.message(
+      'Event created successfully!',
+      name: 'eventCreatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `International Band Music Concert`
+  String get concertTitle1 {
+    return Intl.message(
+      'International Band Music Concert',
+      name: 'concertTitle1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Jo Malone London's Mother's Day Concert`
+  String get concertTitle2 {
+    return Intl.message(
+      'Jo Malone London\'s Mother\'s Day Concert',
+      name: 'concertTitle2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gala Art Exhibition & Gallery Day`
+  String get artExhibitionTitle {
+    return Intl.message(
+      'Gala Art Exhibition & Gallery Day',
+      name: 'artExhibitionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `36 Guild Street London, UK`
+  String get address1 {
+    return Intl.message(
+      '36 Guild Street London, UK',
+      name: 'address1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Radius Gallery London, UK`
+  String get address2 {
+    return Intl.message(
+      'Radius Gallery London, UK',
+      name: 'address2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Convention Center New York, USA`
+  String get address3 {
+    return Intl.message(
+      'Convention Center New York, USA',
+      name: 'address3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Food & Wine Festival`
+  String get foodFestivalTitle {
+    return Intl.message(
+      'Food & Wine Festival',
+      name: 'foodFestivalTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Summer Sports Championship`
+  String get sportsChampionshipTitle {
+    return Intl.message(
+      'Summer Sports Championship',
+      name: 'sportsChampionshipTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Jazz Music Under the Stars`
+  String get jazzMusicTitle {
+    return Intl.message(
+      'Jazz Music Under the Stars',
+      name: 'jazzMusicTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Central Park, New York`
+  String get addressCentralPark {
+    return Intl.message(
+      'Central Park, New York',
+      name: 'addressCentralPark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `MetLife Stadium, NJ`
+  String get addressMetLife {
+    return Intl.message(
+      'MetLife Stadium, NJ',
+      name: 'addressMetLife',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Broadway Theatre, NY`
+  String get addressBroadway {
+    return Intl.message(
+      'Broadway Theatre, NY',
+      name: 'addressBroadway',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,5 +1,5 @@
-import 'package:event_hup/features/home/ui/views/events_view.dart';
-import 'package:event_hup/features/home/ui/widgets/tab_item.dart';
+import 'package:event_hup/features/event/ui/view/events_view.dart';
+import 'package:event_hup/features/event/ui/widgets/tab_item.dart';
 import 'package:event_hup/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -2,6 +2,10 @@
 class Assets {
   Assets._();
   
+  /// Assets for imagesPngBanner
+  /// assets/images/png/banner.png
+  static const String imagesPngBanner = "assets/images/png/banner.png";
+
   /// Assets for imagesPngEventDetails
   /// assets/images/png/eventDetails.png
   static const String imagesPngEventDetails = "assets/images/png/eventDetails.png";
@@ -9,6 +13,10 @@ class Assets {
   /// Assets for imagesPngFacebook
   /// assets/images/png/facebook.png
   static const String imagesPngFacebook = "assets/images/png/facebook.png";
+
+  /// Assets for imagesPngGift
+  /// assets/images/png/gift.png
+  static const String imagesPngGift = "assets/images/png/gift.png";
 
   /// Assets for imagesPngGoogle
   /// assets/images/png/google.png
@@ -37,6 +45,10 @@ class Assets {
   /// Assets for imagesPngOnboarding3
   /// assets/images/png/onboarding_3.png
   static const String imagesPngOnboarding3 = "assets/images/png/onboarding_3.png";
+
+  /// Assets for imagesPngSettingIcon
+  /// assets/images/png/settingIcon.png
+  static const String imagesPngSettingIcon = "assets/images/png/settingIcon.png";
 
   /// Assets for imagesPngSplash
   /// assets/images/png/splash.png
