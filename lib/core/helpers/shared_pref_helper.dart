@@ -176,7 +176,7 @@ class SharedPrefHelper {
   }
 
   /// Removes all keys and values in the FlutterSecureStorage
-  static clearAllSecuredData() async {
+  static Future<void> clearAllSecuredData() async {
     AppLogger.logData('FlutterSecureStorage : all data has been cleared');
     const flutterSecureStorage = FlutterSecureStorage();
     await flutterSecureStorage.deleteAll();

@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class EventListTile extends StatelessWidget {
+class MapEventCard extends StatelessWidget {
   final EventMockData event;
 
-  const EventListTile({
+  const MapEventCard({
     super.key,
     required this.event,
   });
@@ -18,9 +18,7 @@ class EventListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        context.push(EventDetailsView.routerPath);
-      },
+      onTap: () => context.push(EventDetailsView.routerPath),
       child: Container(
         padding: EdgeInsets.all(10.r),
         decoration: BoxDecoration(
@@ -28,21 +26,20 @@ class EventListTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
-              color: AppColors.black.withValues(alpha: 0.04),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+              color: AppColors.black.withValues(alpha: 0.1),
+              blurRadius: 16,
+              offset: const Offset(0, 8),
             ),
           ],
         ),
         child: Row(
           children: [
-            // Left Side: Event Image
             ClipRRect(
               borderRadius: BorderRadius.circular(10.r),
               child: CachedNetworkImage(
                 imageUrl: event.image,
-                width: 80.w,
-                height: 80.h,
+                width: 76.w,
+                height: 76.h,
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Container(color: AppColors.greyLight),
                 errorWidget: (context, url, error) => Container(
@@ -52,41 +49,33 @@ class EventListTile extends StatelessWidget {
               ),
             ),
             SizedBox(width: 14.w),
-
-            // Right Side: Time, Title and Location
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (event.time != null)
-                    Text(
-                      event.time!,
-                      style: AppTextStyles.font14PrimaryMedium.copyWith(
-                        fontSize: 12.sp,
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  Text(
+                    event.time ?? '',
+                    style: AppTextStyles.font14PrimaryMedium.copyWith(
+                      fontSize: 12.sp,
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.w500,
                     ),
+                  ),
                   SizedBox(height: 4.h),
                   Text(
                     event.title,
-                    maxLines: 2,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.font16BlackSemiBold.copyWith(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
-                      height: 1.3,
                     ),
                   ),
                   SizedBox(height: 4.h),
                   Row(
                     children: [
-                      Icon(
-                        Icons.location_on,
-                        color: AppColors.grey,
-                        size: 14.sp,
-                      ),
+                      Icon(Icons.location_on, color: AppColors.grey, size: 14.sp),
                       SizedBox(width: 4.w),
                       Expanded(
                         child: Text(
@@ -103,6 +92,10 @@ class EventListTile extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.bookmark, color: AppColors.error, size: 22.sp),
             ),
           ],
         ),

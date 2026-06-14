@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:event_hup/core/themes/app_colors.dart';
 import 'package:event_hup/core/themes/app_text_styles.dart';
 import 'package:event_hup/features/event/ui/view/event_details_view.dart';
-import 'package:event_hup/features/event/ui/widgets/event_mock_data.dart';
+import 'package:event_hup/features/event/data/event_mock_data.dart';
 import 'package:event_hup/features/event/ui/widgets/overlap_avatars_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

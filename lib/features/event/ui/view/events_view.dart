@@ -1,6 +1,6 @@
 import 'package:event_hup/features/event/ui/widgets/empty_events_view.dart';
 import 'package:event_hup/features/event/ui/widgets/event_app_bar.dart';
-import 'package:event_hup/features/event/ui/widgets/event_mock_data.dart';
+import 'package:event_hup/features/event/data/event_mock_data.dart';
 import 'package:event_hup/features/event/ui/widgets/events_list.dart';
 import 'package:event_hup/features/event/ui/widgets/events_tabs.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,7 @@
 import 'package:event_hup/core/themes/app_colors.dart';
 import 'package:event_hup/core/themes/app_text_styles.dart';
 import 'package:event_hup/features/event/ui/widgets/event_list_tile.dart';
-import 'package:event_hup/features/event/ui/widgets/event_mock_data.dart';
+import 'package:event_hup/features/event/data/event_mock_data.dart';
 import 'package:event_hup/features/event/ui/widgets/filter_sheet/filter_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,13 +28,11 @@ class _SearchViewViewState extends State<SearchView> {
 
   void _filterSearch(String query) {
     setState(() {
-      if (query.isEmpty) {
-        _filteredEvents = EventMockDataLists.upcomingEvents;
-      } else {
-        _filteredEvents = EventMockDataLists.upcomingEvents
-            .where((event) => event.title.toLowerCase().contains(query.toLowerCase()))
-            .toList();
-      }
+      _filteredEvents = query.isEmpty
+          ? EventMockDataLists.upcomingEvents
+          : EventMockDataLists.upcomingEvents
+              .where((event) => event.title.toLowerCase().contains(query.toLowerCase()))
+              .toList();
     });
   }
 
@@ -50,10 +48,7 @@ class _SearchViewViewState extends State<SearchView> {
           onPressed: () => Navigator.maybePop(context),
           icon: Icon(Icons.arrow_back, color: AppColors.black, size: 26.sp),
         ),
-        title: Text(
-          'Search',
-          style: AppTextStyles.font18BlackBold.copyWith(fontSize: 22.sp),
-        ),
+        title: Text('Search', style: AppTextStyles.font18BlackBold.copyWith(fontSize: 22.sp)),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -132,11 +127,7 @@ class _SearchViewViewState extends State<SearchView> {
                 CircleAvatar(
                   radius: 10.r,
                   backgroundColor: AppColors.white.withValues(alpha: 0.15),
-                  child: Icon(
-                    CupertinoIcons.slider_horizontal_3,
-                    color: AppColors.white,
-                    size: 12.sp,
-                  ),
+                  child: Icon(CupertinoIcons.slider_horizontal_3, color: AppColors.white, size: 12.sp),
                 ),
                 SizedBox(width: 6.w),
                 Text(

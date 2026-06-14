@@ -1,133 +1,133 @@
 import 'package:event_hup/core/themes/app_colors.dart';
-import 'package:event_hup/core/themes/app_text_styles.dart';
-import 'package:event_hup/generated/l10n.dart';
+import 'package:event_hup/features/event/ui/widgets/filter_sheet/filter_bottom_sheet.dart';
+import 'package:event_hup/features/home/ui/widgets/map/map_category_chips.dart';
+import 'package:event_hup/features/home/ui/widgets/map/map_event_card.dart';
+import 'package:event_hup/features/home/ui/widgets/map/map_event_item.dart';
+import 'package:event_hup/features/home/ui/widgets/map/map_marker_widget.dart';
+import 'package:event_hup/features/home/ui/widgets/map/map_search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:latlong2/latlong.dart';
 
-class MapView extends StatelessWidget {
+class MapView extends StatefulWidget {
   const MapView({super.key});
+
+  @override
+  State<MapView> createState() => _MapViewState();
+}
+
+class _MapViewState extends State<MapView> {
+  final MapController _mapController = MapController();
+  int _selectedEventIndex = 0;
+  final LatLng _defaultCenter = const LatLng(40.7128, -74.0060);
+  late final List<MapEventItem> _mapEvents = MapEventsList.get();
+
+  void _onLocate() {
+    _mapController.move(_defaultCenter, 14.0);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.greyBackground,
-      appBar: AppBar(
-        title: Text(S.of(context).exploreMap, style: AppTextStyles.font18BlackBold),
-        backgroundColor: AppColors.white,
-        elevation: 0.5,
-        centerTitle: true,
-      ),
       body: Stack(
         children: [
           Positioned.fill(
-            child: Container(
-              color: const Color(0xFFE5E9F0),
-              child: CustomPaint(
-                painter: const MapPainter(),
+            child: FlutterMap(
+              mapController: _mapController,
+              options: MapOptions(
+                initialCenter: _defaultCenter,
+                initialZoom: 14.0,
               ),
+              children: [
+                TileLayer(
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  userAgentPackageName: 'com.example.event_hup',
+                ),
+                MarkerLayer(
+                  markers: List.generate(_mapEvents.length, (index) {
+                    final item = _mapEvents[index];
+                    final isSelected = _selectedEventIndex == index;
+                    return Marker(
+                      point: item.point,
+                      width: 60.r,
+                      height: 60.r,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() => _selectedEventIndex = index);
+                          _mapController.move(item.point, 14.0);
+                        },
+                        child: MapMarkerWidget(
+                          icon: item.icon,
+                          backgroundColor: item.color,
+                          isSelected: isSelected,
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ],
             ),
           ),
           Positioned(
-            top: 20.h,
+            top: MediaQuery.of(context).padding.top + 12.h,
             left: 20.w,
             right: 20.w,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(24.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.black.withValues(alpha: 0.08),
-                    blurRadius: 16,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Icon(CupertinoIcons.search, color: AppColors.grey, size: 20.sp),
-                  SizedBox(width: 10.w),
-                  Expanded(
-                    child: Text(
-                      S.of(context).searchForEvents,
-                      style: AppTextStyles.font14GreyMedium,
-                    ),
-                  ),
-                  Icon(CupertinoIcons.slider_horizontal_3, color: AppColors.primary, size: 20.sp),
-                ],
-              ),
+            child: Column(
+              children: [
+                MapSearchBar(onLocatePressed: _onLocate),
+                SizedBox(height: 12.h),
+                const MapCategoryChips(),
+              ],
             ),
           ),
-          Center(
-            child: Container(
-              width: 50.r,
-              height: 50.r,
-              decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.2),
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: Container(
-                  width: 20.r,
-                  height: 20.r,
-                  decoration: const BoxDecoration(
-                    color: AppColors.primary,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: Container(
-                      width: 8.r,
-                      height: 8.r,
-                      decoration: const BoxDecoration(
-                        color: AppColors.white,
-                        shape: BoxShape.circle,
-                      ),
+          Positioned(
+            bottom: 24.h,
+            left: 20.w,
+            right: 20.w,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => const FilterBottomSheet(),
+                    );
+                  },
+                  child: Container(
+                    width: 50.r,
+                    height: 50.r,
+                    decoration: const BoxDecoration(
+                      color: AppColors.primary,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Icon(
+                      CupertinoIcons.slider_horizontal_3,
+                      color: AppColors.white,
+                      size: 22.sp,
                     ),
                   ),
                 ),
-              ),
+                SizedBox(height: 16.h),
+                MapEventCard(
+                  event: _mapEvents[_selectedEventIndex].event,
+                ),
+              ],
             ),
           ),
         ],
       ),
     );
   }
-}
-
-class MapPainter extends CustomPainter {
-  const MapPainter();
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.white
-      ..strokeWidth = 12.0
-      ..strokeCap = StrokeCap.round;
-
-    canvas.drawLine(Offset(0, size.height * 0.3), Offset(size.width, size.height * 0.3), paint);
-    canvas.drawLine(Offset(size.width * 0.4, 0), Offset(size.width * 0.4, size.height), paint);
-    canvas.drawLine(Offset(0, size.height * 0.7), Offset(size.width, size.height * 0.8), paint);
-    canvas.drawLine(Offset(size.width * 0.8, 0), Offset(size.width * 0.8, size.height), paint);
-
-    final parkPaint = Paint()..color = const Color(0xFFA3BE8C).withValues(alpha: 0.5);
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(20.w, 40.h, 100.w, 120.h),
-        Radius.circular(12.r),
-      ),
-      parkPaint,
-    );
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(size.width - 120.w, size.height * 0.4, 100.w, 160.h),
-        Radius.circular(12.r),
-      ),
-      parkPaint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
