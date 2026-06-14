@@ -202,6 +202,7 @@ class EventMockData {
   final String date;
   final String month;
   final String address;
+  final String? time;
 
   EventMockData({
     required this.title,
@@ -209,5 +210,6 @@ class EventMockData {
     required this.date,
     required this.month,
     required this.address,
+    this.time,
   });
 }

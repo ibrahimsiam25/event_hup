@@ -2,7 +2,7 @@ import 'package:event_hup/core/themes/app_colors.dart';
 import 'package:event_hup/features/event/ui/view/events_view.dart';
 import 'package:event_hup/features/home/ui/views/home_view.dart' show HomeView;
 import 'package:event_hup/features/home/ui/views/mock_map_view.dart';
-import 'package:event_hup/features/profile/mock_profile_view.dart';
+import 'package:event_hup/features/profile/ui/views/profile_view.dart';
 import 'package:event_hup/features/home/ui/widgets/add_event_fab.dart';
 import 'package:event_hup/features/home/ui/widgets/custom_navigation_bar.dart';
 
@@ -24,7 +24,7 @@ class _BottomNavBarViewState extends State<BottomNavBarView> {
     const HomeView(),
     const EventsView(),
     const MockMapView(),
-    const MockProfileView(),
+    const ProfileView(),
   ];
 
   @override

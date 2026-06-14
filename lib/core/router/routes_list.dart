@@ -4,6 +4,7 @@ import 'package:event_hup/features/event/ui/view/event_details_view.dart';
 import 'package:event_hup/features/event/ui/view/events_view.dart';
 import 'package:event_hup/features/home/ui/views/bottom_nav_bar_view.dart';
 import 'package:event_hup/features/onboarding/ui/view/onboarding_view.dart';
+import 'package:event_hup/features/event/ui/view/organizer_profile_view.dart';
 import 'package:go_router/go_router.dart';
 
 class RoutesList {
@@ -31,6 +32,10 @@ class RoutesList {
     GoRoute(
       path: BottomNavBarView.routerPath,
       builder: (context, state) => const BottomNavBarView(),
+    ),
+    GoRoute(
+      path: OrganizerProfileView.routerPath,
+      builder: (context, state) => const OrganizerProfileView(),
     ),
   ];
 }
