@@ -1,8 +1,10 @@
 import 'package:event_hup/core/themes/app_colors.dart';
 import 'package:event_hup/core/themes/app_text_styles.dart';
+import 'package:event_hup/features/event/ui/view/search_view.dart';
 import 'package:event_hup/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class EventAppBar extends StatelessWidget implements PreferredSizeWidget {
   const EventAppBar({super.key});
@@ -13,14 +15,7 @@ class EventAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.white,
       elevation: 0,
       centerTitle: false,
-      leading: IconButton(
-        onPressed: () => Navigator.pop(context),
-        icon: Icon(
-          Icons.arrow_back,
-          color: AppColors.black,
-          size: 28.sp,
-        ),
-      ),
+      automaticallyImplyLeading: false,
       title: Text(
         S.of(context).events,
         style: AppTextStyles.font18BlackBold.copyWith(
@@ -28,6 +23,16 @@ class EventAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       actions: [
+        IconButton(
+          onPressed: () {
+            context.push(SearchView.routerPath);
+          },
+          icon: Icon(
+            Icons.search,
+            color: AppColors.black,
+            size: 28.sp,
+          ),
+        ),
         IconButton(
           onPressed: () {},
           icon: Icon(

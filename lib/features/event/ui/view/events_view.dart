@@ -1,5 +1,6 @@
 import 'package:event_hup/features/event/ui/widgets/empty_events_view.dart';
 import 'package:event_hup/features/event/ui/widgets/event_app_bar.dart';
+import 'package:event_hup/features/event/ui/widgets/event_mock_data.dart';
 import 'package:event_hup/features/event/ui/widgets/events_list.dart';
 import 'package:event_hup/features/event/ui/widgets/events_tabs.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ enum EventsTab {
   upcoming,
   past,
 }
+
 class EventsView extends StatefulWidget {
   const EventsView({super.key});
 
@@ -25,16 +27,15 @@ class _EventsViewState extends State<EventsView> {
 
   @override
   Widget build(BuildContext context) {
-    final upcomingEvents = <dynamic>[];
-    final pastEvents = <dynamic>[];
+    final upcomingEvents = EventMockDataLists.upcomingEvents;
+    final pastEvents = EventMockDataLists.pastEvents;
 
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: EventAppBar(),
+      appBar: const EventAppBar(),
       body: Column(
         children: [
           SizedBox(height: 12.h),
-
           EventsTabs(
             selectedTab: selectedTab,
             onChanged: (tab) {
@@ -43,9 +44,7 @@ class _EventsViewState extends State<EventsView> {
               });
             },
           ),
-
           SizedBox(height: 24.h),
-
           Expanded(
             child: selectedTab == EventsTab.upcoming
                 ? (upcomingEvents.isEmpty

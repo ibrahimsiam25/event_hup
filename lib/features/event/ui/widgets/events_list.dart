@@ -1,7 +1,10 @@
+import 'package:event_hup/features/event/ui/widgets/event_list_tile.dart';
+import 'package:event_hup/features/event/ui/widgets/event_mock_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EventsList extends StatelessWidget {
-  final List<dynamic> events;
+  final List<EventMockData> events;
 
   const EventsList({
     super.key,
@@ -10,6 +13,15 @@ class EventsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return ListView.builder(
+      padding: EdgeInsets.symmetric(horizontal: 24.w),
+      itemCount: events.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: 16.h),
+          child: EventListTile(event: events[index]),
+        );
+      },
+    );
   }
 }

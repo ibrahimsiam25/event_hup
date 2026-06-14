@@ -2,6 +2,7 @@ import 'package:event_hup/features/auth/ui/views/sign_in_view.dart';
 import 'package:event_hup/features/auth/ui/views/sign_up_view.dart';
 import 'package:event_hup/features/event/ui/view/event_details_view.dart';
 import 'package:event_hup/features/event/ui/view/events_view.dart';
+import 'package:event_hup/features/event/ui/view/search_view.dart';
 import 'package:event_hup/features/home/ui/views/bottom_nav_bar_view.dart';
 import 'package:event_hup/features/onboarding/ui/view/onboarding_view.dart';
 import 'package:event_hup/features/event/ui/view/organizer_profile_view.dart';
@@ -37,5 +38,10 @@ class RoutesList {
       path: OrganizerProfileView.routerPath,
       builder: (context, state) => const OrganizerProfileView(),
     ),
+    GoRoute(
+      path: SearchView.routerPath,
+      builder: (context, state) => const SearchView(),
+    ),
   ];
 }
+
