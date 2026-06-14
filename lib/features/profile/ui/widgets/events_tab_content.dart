@@ -36,6 +36,8 @@ class EventsTabContent extends StatelessWidget {
     ];
 
     return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.all(24.w),
       itemCount: events.length,
       itemBuilder: (context, index) {

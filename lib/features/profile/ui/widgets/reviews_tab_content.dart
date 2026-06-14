@@ -51,6 +51,8 @@ class ReviewsTabContent extends StatelessWidget {
     ];
 
     return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
       itemCount: reviews.length,
       itemBuilder: (context, index) {

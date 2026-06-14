@@ -38,7 +38,7 @@ class _AboutTabContentState extends State<AboutTabContent> {
     const aboutText = 'Enjoy your favorite dishe and a lovely your friends and family and have a great time. '
         'Food from local food trucks will be available for purchase.';
 
-    return SingleChildScrollView(
+    return Padding(
       padding: EdgeInsets.all(24.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

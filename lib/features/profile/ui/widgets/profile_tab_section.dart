@@ -33,11 +33,9 @@ class _ProfileTabSectionState extends State<ProfileTabSection> {
     return Column(
       children: [
         _buildTabBar(),
-        Expanded(
-          child: Container(
-            color: AppColors.greyBackground,
-            child: _buildTabContent(),
-          ),
+        Container(
+          color: AppColors.greyBackground,
+          child: _buildTabContent(),
         ),
       ],
     );
