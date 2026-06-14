@@ -1,24 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:event_hup/core/themes/app_colors.dart';
 import 'package:event_hup/core/themes/app_text_styles.dart';
-import 'package:event_hup/features/profile/ui/widgets/about_tab_content.dart';
-import 'package:event_hup/features/profile/ui/widgets/events_tab_content.dart';
 import 'package:event_hup/features/profile/ui/widgets/profile_stats_row.dart';
 import 'package:event_hup/features/profile/ui/widgets/profile_tab.dart';
-import 'package:event_hup/features/profile/ui/widgets/reviews_tab_content.dart';
+import 'package:event_hup/features/profile/ui/widgets/profile_tab_section.dart';
 import 'package:event_hup/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProfileView extends StatefulWidget {
+class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
-
-  @override
-  State<ProfileView> createState() => _ProfileViewState();
-}
-
-class _ProfileViewState extends State<ProfileView> {
-  ProfileTab _activeTab = ProfileTab.about;
 
   @override
   Widget build(BuildContext context) {
@@ -133,89 +124,14 @@ class _ProfileViewState extends State<ProfileView> {
             ),
           ),
 
-          // Tab Bar Selector
-          _buildTabBar(),
-
-          // Active tab body
-          Expanded(
-            child: Container(
-              color: AppColors.greyBackground,
-              child: _buildTabContent(),
+          // Reusable Tab Section
+          const Expanded(
+            child: ProfileTabSection(
+              initialTab: ProfileTab.about,
             ),
           ),
         ],
       ),
     );
-  }
-
-  Widget _buildTabBar() {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildTabItem(ProfileTab.about, S.of(context).aboutTab),
-            _buildTabItem(ProfileTab.event, S.of(context).eventTab),
-            _buildTabItem(ProfileTab.reviews, S.of(context).reviewsTab),
-          ],
-        ),
-        Container(
-          width: double.infinity,
-          height: 1.h,
-          color: AppColors.greyLight,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTabItem(ProfileTab tab, String label) {
-    final isSelected = _activeTab == tab;
-    return InkWell(
-      onTap: () {
-        setState(() {
-          _activeTab = tab;
-        });
-      },
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 14.h),
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 15.sp,
-                fontWeight: FontWeight.bold,
-                color: isSelected ? AppColors.primary : AppColors.grey,
-              ),
-            ),
-          ),
-          if (isSelected)
-            Container(
-              width: 60.w,
-              height: 3.h,
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(3.r),
-                  topRight: Radius.circular(3.r),
-                ),
-              ),
-            )
-          else
-            SizedBox(height: 3.h),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTabContent() {
-    switch (_activeTab) {
-      case ProfileTab.about:
-        return const AboutTabContent();
-      case ProfileTab.event:
-        return const EventsTabContent();
-      case ProfileTab.reviews:
-        return const ReviewsTabContent();
-    }
   }
 }
