@@ -1,88 +1,107 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import '../entities/event_entity.dart';
 
-part 'event_dto.freezed.dart';
+class EventDto {
+  const EventDto({
+    this.id = '',
+    this.name = '',
+    this.ticketUrl = '',
+    this.imageUrl = '',
+    this.localDate = '',
+    this.localTime = '',
+    this.venue = '',
+    this.city = '',
+    this.address = '',
+    this.organizer = '',
+    this.organizerImageUrl = '',
+    this.info = '',
+    this.pleaseNote = '',
+    this.category = '',
+    this.minPrice = 0.0,
+    this.maxPrice = 0.0,
+    this.currency = '',
+    this.latitude = 0.0,
+    this.longitude = 0.0,
+    this.distance = 0.0,
+  });
 
-@freezed
-class EventDto with _$EventDto {
-  const factory EventDto({
-    @Default('') String id,
-    @Default('') String name,
-    @Default('') String ticketUrl,
-    @Default('') String imageUrl,
-    @Default('') String localDate,
-    @Default('') String localTime,
-    @Default('') String venue,
-    @Default('') String city,
-    @Default('') String address,
-    @Default('') String organizer,
-    @Default('') String organizerImageUrl,
-    @Default('') String info,
-    @Default('') String pleaseNote,
-    @Default('') String category,
-    @Default(0.0) double minPrice,
-    @Default(0.0) double maxPrice,
-    @Default('') String currency,
-    @Default(0.0) double latitude,
-    @Default(0.0) double longitude,
-    @Default(0.0) double distance,
-  }) = _EventDto;
-
-  const EventDto._();
+  final String id;
+  final String name;
+  final String ticketUrl;
+  final String imageUrl;
+  final String localDate;
+  final String localTime;
+  final String venue;
+  final String city;
+  final String address;
+  final String organizer;
+  final String organizerImageUrl;
+  final String info;
+  final String pleaseNote;
+  final String category;
+  final double minPrice;
+  final double maxPrice;
+  final String currency;
+  final double latitude;
+  final double longitude;
+  final double distance;
 
   factory EventDto.fromJson(Map<String, dynamic> json) {
-    final dates = json['dates'] as Map<String, dynamic>?;
-    final start = dates?['start'] as Map<String, dynamic>?;
-    final embedded = json['_embedded'] as Map<String, dynamic>?;
-    final venues = embedded?['venues'] as List<dynamic>?;
-    final venueJson = venues?.whereType<Map<String, dynamic>>().firstOrNull;
-    final cityJson = venueJson?['city'] as Map<String, dynamic>?;
-    final addressJson = venueJson?['address'] as Map<String, dynamic>?;
-    final location = venueJson?['location'] as Map<String, dynamic>?;
-    final attractions = embedded?['attractions'] as List<dynamic>?;
-    final attraction = attractions
-        ?.whereType<Map<String, dynamic>>()
-        .firstOrNull;
-    final classifications = json['classifications'] as List<dynamic>?;
-    final classification = classifications
-        ?.whereType<Map<String, dynamic>>()
-        .firstOrNull;
-    final segment = classification?['segment'] as Map<String, dynamic>?;
-    final images = _sortedImages(json['images']);
-    final attractionImages = _sortedImages(attraction?['images']);
-    final priceRanges = json['priceRanges'] as List<dynamic>?;
-    final price = priceRanges?.whereType<Map<String, dynamic>>().firstOrNull;
+    final dates = _asMap(json['dates']);
+    final start = _asMap(dates?['start']);
+
+    final embedded = _asMap(json['_embedded']);
+    final venues = _asList(embedded?['venues']);
+    final venue = venues.whereType<Map<String, dynamic>>().firstOrNull;
+
+    final city = _asMap(venue?['city']);
+    final address = _asMap(venue?['address']);
+
+    final images =
+        _asList(
+          json['images'],
+        ).whereType<Map<String, dynamic>>().toList()..sort(
+          (a, b) =>
+              ((b['width'] as num?) ?? 0).compareTo((a['width'] as num?) ?? 0),
+        );
+
+    final priceRanges = _asList(json['priceRanges']);
+    final price = priceRanges.whereType<Map<String, dynamic>>().firstOrNull;
 
     return EventDto(
-      id: json['id'] as String? ?? '',
-      name: json['name'] as String? ?? '',
-      ticketUrl: json['url'] as String? ?? '',
-      imageUrl: images.firstOrNull?['url'] as String? ?? '',
-      localDate: start?['localDate'] as String? ?? '',
-      localTime: start?['localTime'] as String? ?? '',
-      venue: venueJson?['name'] as String? ?? '',
-      city: cityJson?['name'] as String? ?? '',
-      address: addressJson?['line1'] as String? ?? '',
-      organizer: attraction?['name'] as String? ?? '',
-      organizerImageUrl: attractionImages.firstOrNull?['url'] as String? ?? '',
-      info: json['info'] as String? ?? '',
-      pleaseNote: json['pleaseNote'] as String? ?? '',
-      category: segment?['name'] as String? ?? '',
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      ticketUrl: json['url'] ?? '',
+      imageUrl: images.firstOrNull?['url'] ?? '',
+      localDate: start?['localDate'] ?? '',
+      localTime: start?['localTime'] ?? '',
+      venue: venue?['name'] ?? '',
+      city: city?['name'] ?? '',
+      address: address?['line1'] ?? '',
+      organizer: '',
+      organizerImageUrl: '',
+      info: json['info'] ?? '',
+      pleaseNote: json['pleaseNote'] ?? '',
+      category: '',
       minPrice: (price?['min'] as num?)?.toDouble() ?? 0.0,
       maxPrice: (price?['max'] as num?)?.toDouble() ?? 0.0,
-      currency: price?['currency'] as String? ?? '',
-      latitude: double.tryParse(location?['latitude'] as String? ?? '') ?? 0.0,
-      longitude: double.tryParse(location?['longitude'] as String? ?? '') ?? 0.0,
+      currency: price?['currency'] ?? '',
+      latitude:
+          double.tryParse(venue?['location']?['latitude']?.toString() ?? '') ??
+          0.0,
+      longitude:
+          double.tryParse(venue?['location']?['longitude']?.toString() ?? '') ??
+          0.0,
       distance: (json['distance'] as num?)?.toDouble() ?? 0.0,
     );
   }
 
   EventEntity toEntity() {
     final parsedDate =
-        DateTime.tryParse(localDate) ??
-        DateTime.fromMillisecondsSinceEpoch(0);
+        DateTime.tryParse(localDate) ?? DateTime.fromMillisecondsSinceEpoch(0);
+
     final parsedTime = _parseTime(localTime);
+
     final eventDateTime = DateTime(
       parsedDate.year,
       parsedDate.month,
@@ -90,77 +109,74 @@ class EventDto with _$EventDto {
       parsedTime?.hour ?? 0,
       parsedTime?.minute ?? 0,
     );
-    final hasKnownDate = localDate.isNotEmpty;
+
     final hasKnownPrice = minPrice > 0 || maxPrice > 0;
+
     final safeMinPrice = minPrice > 0 ? minPrice : maxPrice;
     final safeMaxPrice = maxPrice > 0 ? maxPrice : minPrice;
-    final safeCurrency = currency.trim().isNotEmpty ? currency.trim() : 'USD';
+
     final locationParts = [
       venue,
       address,
       city,
-    ].where((value) => value.trim().isNotEmpty);
+    ].where((e) => e.trim().isNotEmpty).toList();
+
     final descriptionParts = [
       info,
       pleaseNote,
-    ].where((value) => value.trim().isNotEmpty);
+    ].where((e) => e.trim().isNotEmpty).toList();
+
+    final dateLabel = localDate.isEmpty
+        ? 'Date to be announced'
+        : DateFormat('EEE, MMM d').format(parsedDate).toUpperCase();
+
+    final timeLabel = parsedTime == null
+        ? 'Time to be announced'
+        : DateFormat('h:mm a').format(eventDateTime);
 
     return EventEntity(
-      id: id.trim().isNotEmpty ? id.trim() : 'unknown-event',
-      title: name.trim().isNotEmpty ? name.trim() : 'Untitled event',
+      id: id.isNotEmpty ? id : 'unknown-event',
+      title: name.isNotEmpty ? name : 'Untitled event',
       imageUrl: imageUrl,
       dateTime: eventDateTime,
-      dateLabel: hasKnownDate
-          ? DateFormat('d MMMM, y').format(eventDateTime)
-          : 'Date to be announced',
-      timeLabel: parsedTime == null
-          ? 'Time to be announced'
-          : DateFormat('EEEE, h:mm a').format(eventDateTime),
-      venue: venue.trim().isNotEmpty
-          ? venue.trim()
-          : 'Venue to be announced',
-      address: address.trim().isNotEmpty
-          ? address.trim()
-          : 'Address to be announced',
+
+      dateLabel: dateLabel,
+      timeLabel: timeLabel,
+
+      venue: venue,
+      address: address,
+
       locationLabel: locationParts.isEmpty
           ? 'Location to be announced'
           : locationParts.join(', '),
-      organizer: organizer.trim().isNotEmpty
-          ? organizer.trim()
-          : 'Ticketmaster Event',
+
+      organizer: organizer,
       organizerImageUrl: organizerImageUrl,
+
       description: descriptionParts.isEmpty
           ? 'No additional event information is available.'
           : descriptionParts.join('\n\n'),
-      category: category.trim().isNotEmpty
-          ? category.trim()
-          : 'Event',
+
+      category: category,
+
       minPrice: safeMinPrice,
       maxPrice: safeMaxPrice,
-      currency: safeCurrency,
-      priceLabel: hasKnownPrice
-          ? _priceLabel(safeMinPrice, safeMaxPrice, safeCurrency)
-          : 'See ticket options',
+      currency: currency.isEmpty ? 'USD' : currency,
+
+      priceLabel: hasKnownPrice ? '$safeMinPrice - $safeMaxPrice' : 'N/A',
+
       hasPrice: hasKnownPrice,
+
       latitude: latitude,
       longitude: longitude,
       distance: distance,
+
       distanceLabel: distance > 0
           ? '${distance.toStringAsFixed(1)} km away'
           : '',
+
       ticketUrl: ticketUrl,
     );
-  }
-
-  static List<Map<String, dynamic>> _sortedImages(Object? value) {
-    final images =
-        (value as List<dynamic>?)?.whereType<Map<String, dynamic>>().toList() ??
-        [];
-    images.sort(
-      (a, b) =>
-          ((b['width'] as num?) ?? 0).compareTo((a['width'] as num?) ?? 0),
-    );
-    return images;
   }
 
   static DateTime? _parseTime(String value) {
@@ -168,13 +184,15 @@ class EventDto with _$EventDto {
     return DateTime.tryParse('2000-01-01T$value');
   }
 
-  static String _priceLabel(double min, double max, String currency) {
-    final format = NumberFormat.currency(
-      name: currency,
-      symbol: currency == 'USD' ? '\$' : '$currency ',
-      decimalDigits: 0,
-    );
-    if (min == max) return format.format(min);
-    return '${format.format(min)} - ${format.format(max)}';
+  static Map<String, dynamic>? _asMap(Object? value) {
+    return value is Map<String, dynamic> ? value : null;
   }
+
+  static List<dynamic> _asList(Object? value) {
+    return value is List<dynamic> ? value : const [];
+  }
+}
+
+extension FirstOrNullExt<T> on List<T> {
+  T? get firstOrNull => isEmpty ? null : first;
 }

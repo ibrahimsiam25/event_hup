@@ -18,15 +18,19 @@ class EventsRepositoryImpl implements EventsRepository {
   Future<ApiResult<EventPage>> getEvents(EventQuery query) async {
     try {
       final result = await _remoteDataSource.getEvents(query);
-      var events = result.events.map((event) => event.toEntity()).toList();
+    var events = result.events
+    .map((e) => e.toEntity())
+    .whereType<EventEntity>()
+    .toList();
 
-      if (query.hasPriceFilter) {
-        events = events.where((event) {
-          if (!event.hasPrice) return false;
-          return event.maxPrice >= query.minPrice! &&
-              event.minPrice <= query.maxPrice!;
-        }).toList();
-      }
+if (query.hasPriceFilter) {
+  events = events.where((event) {
+    if (!event.hasPrice) return false;
+
+    return event.maxPrice >= query.minPrice! &&
+        event.minPrice <= query.maxPrice!;
+  }).toList();
+}
 
       final page = EventPage(
         events: events,

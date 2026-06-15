@@ -56,55 +56,62 @@ class SearchCubit extends Cubit<SearchState> {
   Future<void> loadMore() => _search(refresh: false);
 
   Future<void> refresh() => _search(refresh: true);
+Future<void> _search({required bool refresh}) async {
+  if (isClosed) return;
 
-  Future<void> _search({required bool refresh}) async {
-    if (state.isLoadingMore || (!refresh && !state.hasMore)) return;
-    final requestId = ++_requestId;
-    final nextPage = refresh ? 0 : state.page + 1;
+  if (state.isLoadingMore || (!refresh && !state.hasMore)) return;
 
-    emit(
-      state.copyWith(
-        status: state.events.isEmpty || refresh
-            ? SearchStatus.loading
-            : state.status,
-        isLoadingMore: !refresh,
-        errorMessage: '',
-      ),
-    );
+  final requestId = ++_requestId;
+  final nextPage = refresh ? 0 : state.page + 1;
 
-    final result = await _repository.getEvents(
-      _query.copyWith(page: nextPage),
-    );
+  emit(
+    state.copyWith(
+      status: state.events.isEmpty || refresh
+          ? SearchStatus.loading
+          : state.status,
+      isLoadingMore: !refresh,
+      errorMessage: '',
+    ),
+  );
 
-    if (requestId != _requestId) return;
+  final result = await _repository.getEvents(
+    _query.copyWith(page: nextPage),
+  );
 
-    result.when(
-      success: (pageData) {
-        emit(
-          state.copyWith(
-            status: SearchStatus.success,
-            events: refresh
-                ? List.unmodifiable(pageData.events)
-                : List.unmodifiable([...state.events, ...pageData.events]),
-            page: pageData.page,
-            hasMore: pageData.hasMore,
-            isLoadingMore: false,
-          ),
-        );
-      },
-      failure: (failure) {
-        emit(
-          state.copyWith(
-            status: state.events.isEmpty
-                ? SearchStatus.failure
-                : SearchStatus.success,
-            isLoadingMore: false,
-            errorMessage: failure.message,
-          ),
-        );
-      },
-    );
-  }
+  if (isClosed) return;
+  if (requestId != _requestId) return;
+
+  result.when(
+    success: (pageData) {
+      if (isClosed) return;
+
+      emit(
+        state.copyWith(
+          status: SearchStatus.success,
+          events: refresh
+              ? List.unmodifiable(pageData.events)
+              : List.unmodifiable([...state.events, ...pageData.events]),
+          page: pageData.page,
+          hasMore: pageData.hasMore,
+          isLoadingMore: false,
+        ),
+      );
+    },
+    failure: (failure) {
+      if (isClosed) return;
+
+      emit(
+        state.copyWith(
+          status: state.events.isEmpty
+              ? SearchStatus.failure
+              : SearchStatus.success,
+          isLoadingMore: false,
+          errorMessage: failure.message,
+        ),
+      );
+    },
+  );
+}
 
   @override
   Future<void> close() {

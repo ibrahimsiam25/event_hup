@@ -1,3 +1,4 @@
+import 'package:event_hup/features/event/data/entities/event_query.dart';
 import 'package:event_hup/features/event/ui/view/events_view.dart';
 import 'package:event_hup/features/event/ui/widgets/tab_item.dart';
 import 'package:event_hup/generated/l10n.dart';
@@ -11,8 +12,8 @@ class EventsTabs extends StatelessWidget {
     required this.onChanged,
   });
 
-  final EventsTab selectedTab;
-  final ValueChanged<EventsTab> onChanged;
+  final EventListMode   selectedTab;
+  final ValueChanged<EventListMode> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +30,15 @@ class EventsTabs extends StatelessWidget {
           Expanded(
             child: TabItem(
               title: S.of(context).upcoming,
-              isSelected: selectedTab == EventsTab.upcoming,
-              onTap: () => onChanged(EventsTab.upcoming),
+              isSelected: selectedTab == EventListMode.upcoming,
+              onTap: () => onChanged(EventListMode.upcoming),
             ),
           ),
           Expanded(
             child: TabItem(
               title: S.of(context).pastEvents,
-              isSelected: selectedTab == EventsTab.past,
-              onTap: () => onChanged(EventsTab.past),
+              isSelected: selectedTab == EventListMode.past,
+              onTap: () => onChanged(EventListMode.past),
             ),
           ),
         ],

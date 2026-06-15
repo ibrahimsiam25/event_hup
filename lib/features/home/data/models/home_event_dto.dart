@@ -1,24 +1,32 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:intl/intl.dart';
 import '../entities/home_event_entity.dart';
 
-part 'home_event_dto.freezed.dart';
+part 'home_event_dto.g.dart';
 
-@freezed
-class HomeEventDto with _$HomeEventDto {
-  const factory HomeEventDto({
-    @Default('') String id,
-    @Default('') String name,
-    @Default('') String imageUrl,
-    @Default('') String localDate,
-    @Default('') String localTime,
-    @Default('') String venueName,
-    @Default('') String city,
-    @Default('') String address,
-    @Default(0.0) double distance,
-  }) = _HomeEventDto;
+@JsonSerializable()
+class HomeEventDto {
+  final String id;
+  final String name;
+  final String imageUrl;
+  final String localDate;
+  final String localTime;
+  final String venueName;
+  final String city;
+  final String address;
+  final double distance;
 
-  const HomeEventDto._();
+  const HomeEventDto({
+    this.id = '',
+    this.name = '',
+    this.imageUrl = '',
+    this.localDate = '',
+    this.localTime = '',
+    this.venueName = '',
+    this.city = '',
+    this.address = '',
+    this.distance = 0.0,
+  });
 
   factory HomeEventDto.fromJson(Map<String, dynamic> json) {
     final dates = _asMap(json['dates']);
@@ -26,40 +34,48 @@ class HomeEventDto with _$HomeEventDto {
     final embedded = _asMap(json['_embedded']);
     final venues = _asList(embedded?['venues']);
     final venue = venues.whereType<Map<String, dynamic>>().firstOrNull;
+
     final city = _asMap(venue?['city']);
     final address = _asMap(venue?['address']);
-    final images = _asList(
-      json['images'],
-    ).whereType<Map<String, dynamic>>().toList();
+
+    final images = _asList(json['images'])
+        .whereType<Map<String, dynamic>>()
+        .toList();
+
     images.sort(
-      (a, b) =>
-          ((b['width'] as num?) ?? 0).compareTo((a['width'] as num?) ?? 0),
+      (a, b) => ((b['width'] as num?) ?? 0)
+          .compareTo((a['width'] as num?) ?? 0),
     );
 
     return HomeEventDto(
-      id: json['id'] as String? ?? '',
-      name: json['name'] as String? ?? '',
-      imageUrl: images.firstOrNull?['url'] as String? ?? '',
-      localDate: start?['localDate'] as String? ?? '',
-      localTime: start?['localTime'] as String? ?? '',
-      venueName: venue?['name'] as String? ?? '',
-      city: city?['name'] as String? ?? '',
-      address: address?['line1'] as String? ?? '',
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      imageUrl: images.firstOrNull?['url'] ?? '',
+      localDate: start?['localDate'] ?? '',
+      localTime: start?['localTime'] ?? '',
+      venueName: venue?['name'] ?? '',
+      city: city?['name'] ?? '',
+      address: address?['line1'] ?? '',
       distance: (json['distance'] as num?)?.toDouble() ?? 0.0,
     );
   }
 
+  Map<String, dynamic> toJson() => _$HomeEventDtoToJson(this);
+
   HomeEventEntity toEntity() {
     final parsedDate = DateTime.tryParse(localDate);
+
     final dateLabel = parsedDate == null
         ? 'Date to be announced'
         : DateFormat('EEE, MMM d').format(parsedDate).toUpperCase();
+
     final time = _formatTime(localTime);
+
     final locationParts = [
       venueName,
       address,
       city,
-    ].where((value) => value.trim().isNotEmpty);
+    ].where((v) => v.trim().isNotEmpty);
 
     return HomeEventEntity(
       id: id.trim().isNotEmpty ? id.trim() : 'unknown-event',
@@ -73,7 +89,8 @@ class HomeEventDto with _$HomeEventDto {
       location: locationParts.isEmpty
           ? 'Location to be announced'
           : locationParts.join(', '),
-      distanceLabel: distance > 0 ? '${distance.toStringAsFixed(1)} km away' : '',
+      distanceLabel:
+          distance > 0 ? '${distance.toStringAsFixed(1)} km away' : '',
     );
   }
 

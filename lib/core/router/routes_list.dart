@@ -38,13 +38,7 @@ class RoutesList {
         );
       },
     ),
-    GoRoute(
-      path: EventsView.routerPath,
-      builder: (context, state) => BlocProvider(
-        create: (_) => getIt<EventsListCubit>(param1: EventListMode.upcoming)..load(),
-        child: const EventsView(),
-      ),
-    ),
+   
     GoRoute(
       path: BottomNavBarView.routerPath,
       builder: (context, state) => const BottomNavBarView(),

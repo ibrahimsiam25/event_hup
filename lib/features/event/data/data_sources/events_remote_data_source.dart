@@ -37,14 +37,14 @@ class EventsRemoteDataSourceImpl implements EventsRemoteDataSource {
     if (query.keyword.trim().isNotEmpty) {
       queryParameters['keyword'] = query.keyword.trim();
     }
-    if (query.city.trim().isNotEmpty && query.mode != EventListMode.nearby) {
+    if (query.city.trim().isNotEmpty && query.mode != EventListMode.upcoming) {
       queryParameters['city'] = query.city.trim();
     }
     if (query.classificationName.trim().isNotEmpty) {
       queryParameters['classificationName'] = query.classificationName.trim();
     }
 
-    if (query.mode == EventListMode.nearby) {
+    if (query.mode == EventListMode.upcoming) {
       queryParameters.addAll({
         'latlong': '40.7484,-73.9857',
         'radius': 20,

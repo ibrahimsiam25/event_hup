@@ -26,14 +26,13 @@ class EventsListCubit extends Cubit<EventsListState> {
             ? 0
             : state.page + 1;
     if (!refresh && state.events.isNotEmpty && !state.hasMore) return;
-
-    emit(
-      state.copyWith(
-        status: state.events.isEmpty ? ListStatus.loading : state.status,
-        isLoadingMore: state.events.isNotEmpty,
-        errorMessage: '',
-      ),
-    );
+emit(
+  state.copyWith(
+    status: refresh ? ListStatus.loading : state.status,
+    isLoadingMore: !refresh,
+    errorMessage: '',
+  ),
+);
 
     final result = await _repository.getEvents(
       _query.copyWith(page: nextPage),
@@ -67,9 +66,23 @@ class EventsListCubit extends Cubit<EventsListState> {
     );
   }
 
-  Future<void> changeMode(EventListMode mode) async {
-    _query = EventQuery(mode: mode);
-    emit(EventsListState(mode: mode));
-    await load(refresh: true);
-  }
+Future<void> changeMode(EventListMode mode) async {
+  if (state.mode == mode) return;
+
+  _query = EventQuery(mode: mode);
+
+  emit(
+    state.copyWith(
+      mode: mode,
+      status: ListStatus.loading,
+      events: [],
+      page: 0,
+      hasMore: true,
+      isLoadingMore: false,
+      errorMessage: '',
+    ),
+  );
+
+  await load(refresh: true);
+}
 }

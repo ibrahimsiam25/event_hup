@@ -1,6 +1,6 @@
 import 'event_entity.dart';
 
-enum EventListMode { upcoming, past, nearby }
+enum EventListMode { upcoming, past }
 
 enum EventDatePreset { any, today, tomorrow, thisWeek, custom }
 
