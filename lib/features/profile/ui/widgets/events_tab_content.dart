@@ -1,5 +1,5 @@
 import 'package:event_hup/features/event/ui/widgets/event_list_tile.dart';
-import 'package:event_hup/features/event/data/event_mock_data.dart';
+import 'package:event_hup/features/event/data/entities/event_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,30 +8,81 @@ class EventsTabContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<EventMockData> events = [
-      EventMockData(
+    final List<EventEntity> events = [
+      EventEntity(
+        id: '1',
         title: 'A virtual evening of smooth jazz',
-        image: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=400',
-        date: '1',
-        month: 'MAY',
+        imageUrl: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=400',
+        dateTime: DateTime(2021, 5, 1),
+        dateLabel: '1st May',
+        timeLabel: '1st May- Sat -2:00 PM',
+        venue: 'Central Park',
         address: 'Central Park, New York',
-        time: '1st May- Sat -2:00 PM',
+        locationLabel: 'Central Park, New York',
+        organizer: 'David Silbia',
+        organizerImageUrl: '',
+        description: '',
+        category: 'Music',
+        minPrice: 0,
+        maxPrice: 0,
+        currency: 'USD',
+        priceLabel: 'Free',
+        hasPrice: false,
+        latitude: 0,
+        longitude: 0,
+        distance: 0,
+        distanceLabel: '',
+        ticketUrl: '',
       ),
-      EventMockData(
+      EventEntity(
+        id: '2',
         title: "Jo malone london's mother's day",
-        image: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=400',
-        date: '1',
-        month: 'MAY',
+        imageUrl: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=400',
+        dateTime: DateTime(2021, 5, 1),
+        dateLabel: '1st May',
+        timeLabel: '1st May- Sat -2:00 PM',
+        venue: 'Radius Gallery',
         address: 'Radius Gallery London, UK',
-        time: '1st May- Sat -2:00 PM',
+        locationLabel: 'Radius Gallery London, UK',
+        organizer: 'David Silbia',
+        organizerImageUrl: '',
+        description: '',
+        category: 'Art',
+        minPrice: 0,
+        maxPrice: 0,
+        currency: 'USD',
+        priceLabel: 'Free',
+        hasPrice: false,
+        latitude: 0,
+        longitude: 0,
+        distance: 0,
+        distanceLabel: '',
+        ticketUrl: '',
       ),
-      EventMockData(
+      EventEntity(
+        id: '3',
         title: 'Women\'s leadership conference',
-        image: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=400',
-        date: '1',
-        month: 'MAY',
+        imageUrl: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=400',
+        dateTime: DateTime(2021, 5, 1),
+        dateLabel: '1st May',
+        timeLabel: '1st May- Sat -2:00 PM',
+        venue: 'Convention Center',
         address: 'Convention Center New York, USA',
-        time: '1st May- Sat -2:00 PM',
+        locationLabel: 'Convention Center New York, USA',
+        organizer: 'David Silbia',
+        organizerImageUrl: '',
+        description: '',
+        category: 'Business',
+        minPrice: 0,
+        maxPrice: 0,
+        currency: 'USD',
+        priceLabel: 'Free',
+        hasPrice: false,
+        latitude: 0,
+        longitude: 0,
+        distance: 0,
+        distanceLabel: '',
+        ticketUrl: '',
       ),
     ];
 

@@ -1009,6 +1009,36 @@ class S {
       args: [],
     );
   }
+
+  /// `About Event`
+  String get aboutEvent {
+    return Intl.message(
+      'About Event',
+      name: 'aboutEvent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Past Events`
+  String get noPastEvent {
+    return Intl.message(
+      'No Past Events',
+      name: 'noPastEvent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `BUY TICKET`
+  String get buyTicket {
+    return Intl.message(
+      'BUY TICKET',
+      name: 'buyTicket',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

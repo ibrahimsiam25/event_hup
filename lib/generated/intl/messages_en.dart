@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "aboutEvent": MessageLookupByLibrary.simpleMessage("About Event"),
         "aboutMe": MessageLookupByLibrary.simpleMessage("About Me"),
         "aboutTab": MessageLookupByLibrary.simpleMessage("ABOUT"),
         "address1":
@@ -43,6 +44,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Gala Art Exhibition & Gallery Day"),
         "bookmarkedEvents":
             MessageLookupByLibrary.simpleMessage("Bookmarked Events"),
+        "buyTicket": MessageLookupByLibrary.simpleMessage("BUY TICKET"),
         "changeBtn": MessageLookupByLibrary.simpleMessage("CHANGE"),
         "concert": MessageLookupByLibrary.simpleMessage("Concert"),
         "concertTitle1": MessageLookupByLibrary.simpleMessage(
@@ -116,6 +118,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nearbyYou": MessageLookupByLibrary.simpleMessage("Nearby You"),
         "newYorkUSA": MessageLookupByLibrary.simpleMessage("New York, USA"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
+        "noPastEvent": MessageLookupByLibrary.simpleMessage("No Past Events"),
         "noUpcomingEvent":
             MessageLookupByLibrary.simpleMessage("No Upcoming Event"),
         "noUpcomingEventDescription": MessageLookupByLibrary.simpleMessage(

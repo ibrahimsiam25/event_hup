@@ -94,5 +94,9 @@
   "aboutTab": "ABOUT",
   "eventTab": "EVENT",
   "reviewsTab": "REVIEWS",
-  "reviewDefaultText": "Cinemas is the ultimate experience to see new movies in Gold Class or Vmax. Find a cinema near you."
-}
+  "reviewDefaultText": "Cinemas is the ultimate experience to see new movies in Gold Class or Vmax. Find a cinema near you.",
+  "aboutEvent": "About Event",
+  "noPastEvent": "No Past Events",
+  "buyTicket": "BUY TICKET"
+
+} 

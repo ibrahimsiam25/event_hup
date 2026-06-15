@@ -1,15 +1,15 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:event_hup/core/themes/app_colors.dart';
 import 'package:event_hup/core/themes/app_text_styles.dart';
+import 'package:event_hup/core/widgets/custom_network_image.dart';
 import 'package:event_hup/features/event/ui/view/event_details_view.dart';
-import 'package:event_hup/features/event/data/event_mock_data.dart';
+import 'package:event_hup/features/home/data/entities/home_event_entity.dart';
 import 'package:event_hup/features/event/ui/widgets/overlap_avatars_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class EventCard extends StatelessWidget {
-  final EventMockData event;
+  final HomeEventEntity event;
 
   const EventCard({
     super.key,
@@ -20,7 +20,7 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push(EventDetailsView.routerPath);
+        context.push('/eventDetailsView/${event.id}');
       },
       child: Container(
         width: 230.w,
@@ -44,14 +44,10 @@ class EventCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: CachedNetworkImage(
-                      imageUrl: event.image,
+                    child: SizedBox(
                       width: double.infinity,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Container(color: AppColors.greyLight),
-                      errorWidget: (context, url, error) => Container(
-                        color: AppColors.greyLight,
-                        child: Icon(Icons.broken_image, color: AppColors.grey, size: 30.sp),
+                      child: CustomNetworkImage(
+                        imageUrl: event.imageUrl,
                       ),
                     ),
                   ),
@@ -82,7 +78,7 @@ class EventCard extends StatelessWidget {
                             SizedBox(width: 4.w),
                             Expanded(
                               child: Text(
-                                event.address,
+                                event.location,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTextStyles.font12GreyRegular.copyWith(
@@ -111,7 +107,7 @@ class EventCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        event.date,
+                        event.day,
                         style: AppTextStyles.font18BlackBold.copyWith(
                           color: AppColors.error,
                           fontSize: 14.sp,

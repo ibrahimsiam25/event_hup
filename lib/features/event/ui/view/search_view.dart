@@ -1,11 +1,16 @@
 import 'package:event_hup/core/themes/app_colors.dart';
 import 'package:event_hup/core/themes/app_text_styles.dart';
+import 'package:event_hup/core/widgets/custom_empty_state.dart';
+import 'package:event_hup/core/widgets/custom_error_state.dart';
 import 'package:event_hup/features/event/ui/widgets/event_list_tile.dart';
-import 'package:event_hup/features/event/data/event_mock_data.dart';
 import 'package:event_hup/features/event/ui/widgets/filter_sheet/filter_bottom_sheet.dart';
+import 'package:event_hup/features/event/logic/cubit/search_cubit.dart';
+import 'package:event_hup/generated/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
@@ -13,27 +18,31 @@ class SearchView extends StatefulWidget {
   static const routerPath = "/searchView";
 
   @override
-  State<SearchView> createState() => _SearchViewViewState();
+  State<SearchView> createState() => _SearchViewState();
 }
 
-class _SearchViewViewState extends State<SearchView> {
+class _SearchViewState extends State<SearchView> {
   final TextEditingController _searchController = TextEditingController();
-  List<EventMockData> _filteredEvents = [];
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _filteredEvents = EventMockDataLists.upcomingEvents;
+    _scrollController.addListener(_onScroll);
   }
 
-  void _filterSearch(String query) {
-    setState(() {
-      _filteredEvents = query.isEmpty
-          ? EventMockDataLists.upcomingEvents
-          : EventMockDataLists.upcomingEvents
-              .where((event) => event.title.toLowerCase().contains(query.toLowerCase()))
-              .toList();
-    });
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    // Infinite scroll triggers at ~70% of list height
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent * 0.7) {
+      context.read<SearchCubit>().loadMore();
+    }
   }
 
   @override
@@ -48,7 +57,7 @@ class _SearchViewViewState extends State<SearchView> {
           onPressed: () => Navigator.maybePop(context),
           icon: Icon(Icons.arrow_back, color: AppColors.black, size: 26.sp),
         ),
-        title: Text('Search', style: AppTextStyles.font18BlackBold.copyWith(fontSize: 22.sp)),
+        title: Text(S.of(context).exploreEvents, style: AppTextStyles.font18BlackBold.copyWith(fontSize: 22.sp)),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -57,22 +66,49 @@ class _SearchViewViewState extends State<SearchView> {
             _buildSearchRow(context),
             SizedBox(height: 24.h),
             Expanded(
-              child: _filteredEvents.isEmpty
-                  ? Center(
-                      child: Text(
-                        'No results found',
-                        style: AppTextStyles.font12GreyRegular.copyWith(fontSize: 16.sp),
-                      ),
-                    )
-                  : ListView.builder(
-                      itemCount: _filteredEvents.length,
+              child: BlocBuilder<SearchCubit, SearchState>(
+                builder: (context, state) {
+                  if (state.status == SearchStatus.loading && state.events.isEmpty) {
+                    return const Skeletonizer(
+                      enabled: true,
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  }
+                  if (state.status == SearchStatus.failure && state.events.isEmpty) {
+                    return CustomErrorState(
+                      errorMessage: state.errorMessage,
+                      onRetry: () => context.read<SearchCubit>().refresh(),
+                    );
+                  }
+                  if (state.events.isEmpty) {
+                    return CustomEmptyState(
+                      title: 'No results found',
+                      message: 'No events match your search query.',
+                    );
+                  }
+
+                  return RefreshIndicator(
+                    onRefresh: () => context.read<SearchCubit>().refresh(),
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemCount: state.events.length + (state.isLoadingMore ? 1 : 0),
                       itemBuilder: (context, index) {
+                        if (index == state.events.length) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(vertical: 16.h),
+                            child: const Center(child: CircularProgressIndicator()),
+                          );
+                        }
                         return Padding(
                           padding: EdgeInsets.only(bottom: 16.h),
-                          child: EventListTile(event: _filteredEvents[index]),
+                          child: EventListTile(event: state.events[index]),
                         );
                       },
                     ),
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -93,10 +129,10 @@ class _SearchViewViewState extends State<SearchView> {
               Expanded(
                 child: TextField(
                   controller: _searchController,
-                  onChanged: _filterSearch,
+                  onChanged: context.read<SearchCubit>().keywordChanged,
                   style: AppTextStyles.font15BlackRegular.copyWith(fontSize: 16.sp),
-                  decoration: const InputDecoration(
-                    hintText: 'Search...',
+                  decoration: InputDecoration(
+                    hintText: S.of(context).searchHint,
                     border: InputBorder.none,
                     isDense: true,
                     contentPadding: EdgeInsets.zero,
@@ -131,7 +167,7 @@ class _SearchViewViewState extends State<SearchView> {
                 ),
                 SizedBox(width: 6.w),
                 Text(
-                  'Filters',
+                  S.of(context).filters,
                   style: AppTextStyles.font15WhiteRegular.copyWith(
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
