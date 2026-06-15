@@ -37,7 +37,7 @@ class HomeRepositoryImpl implements HomeRepository {
         latitude: 40.7484,
         longitude: -73.9857,
       );
-
+ 
       final categories = classifications
           .map((dto) => dto.toEntity())
           .whereType<HomeCategoryEntity>()
