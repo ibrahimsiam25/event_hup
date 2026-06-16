@@ -8,6 +8,7 @@ import 'package:event_hup/features/auth/ui/widgets/social_button.dart';
 import 'package:event_hup/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:event_hup/core/helpers/auth_service.dart';
 import 'package:go_router/go_router.dart';
 
 class SignUpViewBody extends StatefulWidget {
@@ -138,9 +139,27 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
 
             CustomButton(
               text: localization.signUpButton,
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  // Perform Sign Up
+                  final id = await AuthService().register(
+                    _nameController.text,
+                    _emailController.text,
+                    _passwordController.text,
+                  );
+                  if (id > 0) {
+                    if (mounted) {
+                      context.pop(); // Go back to login
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Registration successful')),
+                      );
+                    }
+                  } else {
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Registration failed')),
+                      );
+                    }
+                  }
                 }
               },
             ),
