@@ -126,26 +126,7 @@ class EventCard extends StatelessWidget {
                   ),
                 ),
               ),
-              // Favorite Button
-              Positioned(
-                right: 10.w,
-                top: 10.h,
-                child: Container(
-                  width: 30.r,
-                  height: 30.r,
-                  decoration: BoxDecoration(
-                    color: AppColors.white.withValues(alpha: 0.9),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.bookmark,
-                      color: AppColors.error,
-                      size: 16.sp,
-                    ),
-                  ),
-                ),
-              ),
+           
             ],
           ),
         ),

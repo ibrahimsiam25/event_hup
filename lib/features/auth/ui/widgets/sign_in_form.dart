@@ -69,45 +69,44 @@ class _SignInFormState extends State<SignInForm> {
           ),
           SizedBox(height: 20.h),
           if (_rememberedUsers.isNotEmpty)
-            Center(
-              child: Wrap(
-                spacing: 24.w,
-                runSpacing: 16.h,
-                alignment: WrapAlignment.center,
-                children: _rememberedUsers.map((user) {
-                  final userName = user['name'] as String;
-                  return GestureDetector(
-                    onTap: () async {
-                      final success = await AuthService().login(
-                        user['email'],
-                        user['password'],
-                        true,
-                      );
-                      if (success && mounted) {
-                        context.go(BottomNavBarView.routerPath);
-                      }
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        CircleAvatar(
-                          radius: 36.r,
-                          backgroundColor: AppColors.primary,
-                          child: Text(
-                            userName.length >= 2 ? userName.substring(0, 2).toUpperCase() : userName.toUpperCase(),
-                            style: AppTextStyles.font18BlackBold.copyWith(color: AppColors.white, fontSize: 24.sp),
-                          ),
+            Wrap(
+              spacing: 24.w,
+              runSpacing: 16.h,
+              alignment: WrapAlignment.start,
+              children: _rememberedUsers.map((user) {
+                final userName = user['name'] as String;
+                return GestureDetector(
+                  onTap: () async {
+                    final success = await AuthService().login(
+                      user['email'],
+                      user['password'],
+                      true,
+                    );
+                    if (success && mounted) {
+                      context.go(BottomNavBarView.routerPath);
+                    }
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CircleAvatar(
+                        radius: 20.r,
+                    
+                        backgroundColor: AppColors.primary,
+                        child: Text(
+                          userName.length >= 2 ? userName.substring(0, 2).toUpperCase() : userName.toUpperCase(),
+                          style: AppTextStyles.font18BlackBold.copyWith(color: AppColors.white, fontSize: 24.sp),
                         ),
-                        SizedBox(height: 8.h),
-                        Text(
-                          userName,
-                          style: AppTextStyles.font15BlackRegular.copyWith(color: AppColors.darkText),
-                        ),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
+                      ),
+                      SizedBox(height: 8.h),
+                      Text(
+                        userName,
+                        style: AppTextStyles.font15BlackRegular.copyWith(color: AppColors.darkText),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
             ),
           if (_rememberedUsers.isNotEmpty) SizedBox(height: 20.h),
           CustomTextField(
