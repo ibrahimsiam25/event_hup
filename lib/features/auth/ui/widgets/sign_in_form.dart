@@ -36,9 +36,6 @@ class _SignInFormState extends State<SignInForm> {
     if (users.isNotEmpty) {
       setState(() {
         _rememberedUsers = users;
-        // Pre-fill with the first user
-        _emailController.text = users.first['email'] ?? '';
-        _passwordController.text = users.first['password'] ?? '';
         _rememberMe = true;
       });
     }
