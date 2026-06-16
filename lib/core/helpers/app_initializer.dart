@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class AppInitializer {
@@ -24,16 +25,15 @@ class AppInitializer {
     final isNotFirstLogin = await SharedPrefHelper.getBool(
       AppConstants.prefsIsNotFirstLogin,
     );
-    final token = await SharedPrefHelper.getSecuredString(
-      AppConstants.prefsAccessToken,
-    );
+    
+    final prefs = await SharedPreferences.getInstance();
+    final hasSession = prefs.getInt('user_id') != null;
 
     if (!getIt.isRegistered<GoRouter>()) {
       getIt.registerSingleton<GoRouter>(
-        AppRouter.getRouter(isNotFirstLogin: isNotFirstLogin, token: token),
+        AppRouter.getRouter(isNotFirstLogin: isNotFirstLogin, hasSession: hasSession),
       );
     }
   }
 
 }
-
