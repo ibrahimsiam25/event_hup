@@ -11,6 +11,9 @@ import '../../features/event/data/entities/event_query.dart';
 import '../../features/event/logic/cubit/events_list_cubit.dart';
 import '../../features/event/logic/cubit/event_details_cubit.dart';
 import '../../features/event/logic/cubit/search_cubit.dart';
+import '../helpers/auth_service.dart';
+import '../../features/auth/logic/login/login_cubit.dart';
+import '../../features/auth/logic/signup/signup_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -19,6 +22,11 @@ Future<void> setupGetIt() async {
     ..registerLazySingleton<Dio>(DioHelper.createDio)
     ..registerLazySingleton<TicketmasterApi>(() => TicketmasterApi(getIt<Dio>()))
     
+    // Auth Feature
+    ..registerLazySingleton<AuthService>(() => AuthService())
+    ..registerFactory<LoginCubit>(() => LoginCubit(getIt()))
+    ..registerFactory<SignupCubit>(() => SignupCubit(getIt()))
+
     // Home Feature
     ..registerLazySingleton<HomeRemoteDataSource>(
       () => HomeRemoteDataSourceImpl(getIt()),

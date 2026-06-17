@@ -8,7 +8,9 @@ import 'package:event_hup/features/auth/ui/widgets/social_button.dart';
 import 'package:event_hup/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:event_hup/core/helpers/auth_service.dart';
+import 'package:event_hup/features/auth/logic/signup/signup_cubit.dart';
+import 'package:event_hup/features/auth/logic/signup/signup_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class SignUpViewBody extends StatefulWidget {
@@ -38,9 +40,23 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
   Widget build(BuildContext context) {
     final localization = S.of(context);
 
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 28.w),
-      child: Form(
+    return BlocConsumer<SignupCubit, SignupState>(
+      listener: (context, state) {
+        if (state is SignupSuccess) {
+          context.pop(); // Go back to login
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Registration successful')),
+          );
+        } else if (state is SignupFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.error)),
+          );
+        }
+      },
+      builder: (context, state) {
+        return SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 28.w),
+          child: Form(
         key: _formKey,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
@@ -137,32 +153,20 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
             ),
             SizedBox(height: 30.h),
 
-            CustomButton(
-              text: localization.signUpButton,
-              onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  final id = await AuthService().register(
-                    _nameController.text,
-                    _emailController.text,
-                    _passwordController.text,
-                  );
-                  if (id > 0) {
-                    if (mounted) {
-                      context.pop(); // Go back to login
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Registration successful')),
+            state is SignupLoading
+              ? const Center(child: CircularProgressIndicator())
+              : CustomButton(
+                  text: localization.signUpButton,
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      context.read<SignupCubit>().register(
+                        _nameController.text,
+                        _emailController.text,
+                        _passwordController.text,
                       );
                     }
-                  } else {
-                    if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Registration failed')),
-                      );
-                    }
-                  }
-                }
-              },
-            ),
+                  },
+                ),
             SizedBox(height: 24.h),
 
             Center(
@@ -221,5 +225,6 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
         ),
       ),
     );
+  });
   }
 }

@@ -6,7 +6,9 @@ import 'package:event_hup/core/widgets/custom_text_field.dart';
 import 'package:event_hup/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:event_hup/core/helpers/auth_service.dart';
+import 'package:event_hup/features/auth/logic/login/login_cubit.dart';
+import 'package:event_hup/features/auth/logic/login/login_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../home/ui/views/bottom_nav_bar_view.dart';
@@ -28,17 +30,6 @@ class _SignInFormState extends State<SignInForm> {
   @override
   void initState() {
     super.initState();
-    _loadRememberedUsers();
-  }
-
-  Future<void> _loadRememberedUsers() async {
-    final users = await AuthService().getRememberedUsers();
-    if (users.isNotEmpty) {
-      setState(() {
-        _rememberedUsers = users;
-        _rememberMe = true;
-      });
-    }
   }
 
   @override
@@ -51,11 +42,27 @@ class _SignInFormState extends State<SignInForm> {
   @override
   Widget build(BuildContext context) {
     final localization = S.of(context);
-    return Form(
-      key: _formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return BlocConsumer<LoginCubit, LoginState>(
+      listener: (context, state) {
+        if (state is LoginRememberedUsersLoaded) {
+          setState(() {
+            _rememberedUsers = state.users;
+            _rememberMe = true;
+          });
+        } else if (state is LoginSuccess) {
+          context.go(BottomNavBarView.routerPath);
+        } else if (state is LoginFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.error)),
+          );
+        }
+      },
+      builder: (context, state) {
+        return Form(
+          key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             localization.signIn,
@@ -73,15 +80,12 @@ class _SignInFormState extends State<SignInForm> {
               children: _rememberedUsers.map((user) {
                 final userName = user['name'] as String;
                 return GestureDetector(
-                  onTap: () async {
-                    final success = await AuthService().login(
+                  onTap: () {
+                    context.read<LoginCubit>().login(
                       user['email'],
                       user['password'],
                       true,
                     );
-                    if (success && mounted) {
-                      context.go(BottomNavBarView.routerPath);
-                    }
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -170,29 +174,23 @@ class _SignInFormState extends State<SignInForm> {
             ],
           ),
           SizedBox(height: 30.h),
-          CustomButton(
-            text: localization.signInButton,
-            onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                final success = await AuthService().login(
-                  _emailController.text,
-                  _passwordController.text,
-                  _rememberMe,
-                );
-                if (success) {
-                  if (mounted) context.go(BottomNavBarView.routerPath);
-                } else {
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Invalid email or password')),
+          state is LoginLoading 
+            ? const Center(child: CircularProgressIndicator())
+            : CustomButton(
+                text: localization.signInButton,
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    context.read<LoginCubit>().login(
+                      _emailController.text,
+                      _passwordController.text,
+                      _rememberMe,
                     );
                   }
-                }
-              }
-            },
-          ),
+                },
+              ),
         ],
       ),
     );
+  });
   }
 }
