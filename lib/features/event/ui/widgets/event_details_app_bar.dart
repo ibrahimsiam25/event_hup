@@ -1,4 +1,4 @@
-import 'package:event_hup/core/helpers/favorites_service.dart';
+import 'package:event_hup/features/event/data/services/favorites_service.dart';
 import 'package:event_hup/core/themes/app_colors.dart';
 import 'package:event_hup/core/themes/app_text_styles.dart';
 import 'package:event_hup/core/widgets/custom_network_image.dart';

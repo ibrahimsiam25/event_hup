@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:event_hup/core/helpers/auth_service.dart';
+import 'package:event_hup/features/auth/data/services/auth_service.dart';
 import 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {

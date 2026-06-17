@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'database_helper.dart';
+import 'package:event_hup/core/database/database_helper.dart';
 
 class AuthService {
   static const String _keyUserId = 'user_id';

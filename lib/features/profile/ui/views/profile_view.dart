@@ -1,4 +1,4 @@
-import 'package:event_hup/core/helpers/auth_service.dart';
+import 'package:event_hup/features/auth/data/services/auth_service.dart';
 import 'package:event_hup/core/themes/app_colors.dart';
 import 'package:event_hup/core/themes/app_text_styles.dart';
 import 'package:event_hup/features/profile/ui/widgets/profile_header_section.dart';
