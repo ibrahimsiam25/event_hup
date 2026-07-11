@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class ExploreHeader extends StatelessWidget {
   const ExploreHeader({super.key});
@@ -31,9 +32,9 @@ class ExploreHeader extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _buildHeaderTopRow(context),
+          _buildHeaderTopRow(context).animate().fade(duration: 400.ms).slideY(begin: -0.2, end: 0),
           SizedBox(height: 24.h),
-          _buildSearchRow(context),
+          _buildSearchRow(context).animate().fade(duration: 400.ms, delay: 200.ms).slideY(begin: 0.2, end: 0),
         ],
       ),
     );

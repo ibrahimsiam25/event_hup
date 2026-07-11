@@ -27,76 +27,114 @@ class CustomTextField extends StatefulWidget {
 
 class _CustomTextFieldState extends State<CustomTextField> {
   bool _obscureText = true;
+  final FocusNode _focusNode = FocusNode();
+  bool _isFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      setState(() {
+        _isFocused = _focusNode.hasFocus;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: widget.controller,
-      obscureText: widget.isPassword ? _obscureText : false,
-      keyboardType: widget.keyboardType,
-      validator: widget.validator,
-      style: AppTextStyles.font15BlackRegular.copyWith(
-        fontSize: 14.sp,
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.r),
+        boxShadow: _isFocused
+            ? [
+                BoxShadow(
+                  color: AppColors.primary.withValues(alpha: 0.15),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                )
+              ]
+            : [],
       ),
-      decoration: InputDecoration(
-        hintText: widget.hintText,
-        hintStyle: AppTextStyles.font15WhiteRegular.copyWith(
-          color: AppColors.grey,
+      child: TextFormField(
+        focusNode: _focusNode,
+        controller: widget.controller,
+        obscureText: widget.isPassword ? _obscureText : false,
+        keyboardType: widget.keyboardType,
+        validator: widget.validator,
+        style: AppTextStyles.font15BlackRegular.copyWith(
           fontSize: 14.sp,
         ),
-        prefixIcon: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Icon(
-            widget.prefixIcon,
-            color: AppColors.greyDark,
-            size: 22.sp,
+        decoration: InputDecoration(
+          hintText: widget.hintText,
+          hintStyle: AppTextStyles.font15WhiteRegular.copyWith(
+            color: AppColors.grey,
+            fontSize: 14.sp,
           ),
-        ),
-        prefixIconConstraints: BoxConstraints(
-          minWidth: 40.w,
-        ),
-        suffixIcon: widget.isPassword
-            ? IconButton(
-                onPressed: () {
-                  setState(() {
-                    _obscureText = !_obscureText;
-                  });
-                },
-                icon: Icon(
-                  _obscureText
-                      ? Icons.visibility_off_outlined
-                      : Icons.visibility_outlined,
-                  color: AppColors.greyDark,
-                  size: 20.sp,
-                ),
-              )
-            : null,
-        contentPadding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 16.w),
-        filled: true,
-        fillColor: AppColors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(
-            color: AppColors.greyLight
+          prefixIcon: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: AnimatedScale(
+              scale: _isFocused ? 1.1 : 1.0,
+              duration: const Duration(milliseconds: 200),
+              child: Icon(
+                widget.prefixIcon,
+                color: _isFocused ? AppColors.primary : AppColors.greyDark,
+                size: 22.sp,
+              ),
+            ),
           ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(
-            color: AppColors.greyLight
+          prefixIconConstraints: BoxConstraints(
+            minWidth: 40.w,
           ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(
-            width: 2,
-            color: AppColors.primary,
+          suffixIcon: widget.isPassword
+              ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                  icon: Icon(
+                    _obscureText
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: _isFocused ? AppColors.primary : AppColors.greyDark,
+                    size: 20.sp,
+                  ),
+                )
+              : null,
+          contentPadding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 16.w),
+          filled: true,
+          fillColor: AppColors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.r),
+            borderSide: const BorderSide(
+              color: AppColors.greyLight
+            ),
           ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: const BorderSide(
-            color: AppColors.error,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.r),
+            borderSide: const BorderSide(
+              color: AppColors.greyLight
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.r),
+            borderSide: const BorderSide(
+              width: 1.5,
+              color: AppColors.primary,
+            ),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.r),
+            borderSide: const BorderSide(
+              color: AppColors.error,
+            ),
           ),
         ),
       ),

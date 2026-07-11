@@ -3,6 +3,7 @@ import 'package:event_hup/core/themes/app_text_styles.dart';
 import 'package:event_hup/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class CategoryChipsList extends StatelessWidget {
   const CategoryChipsList({super.key});
@@ -38,37 +39,43 @@ class CategoryChipsList extends StatelessWidget {
       itemCount: categories.length,
       itemBuilder: (context, index) {
         final cat = categories[index];
-        return Container(
-          margin: EdgeInsets.only(right: 12.w),
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-          decoration: BoxDecoration(
-            color: cat.color,
-            borderRadius: BorderRadius.circular(24.r),
-            boxShadow: [
-              BoxShadow(
-                color: cat.color.withValues(alpha: 0.25),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
+        return Padding(
+          padding: EdgeInsets.only(right: 12.w),
+          child: Skeleton.leaf(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+              decoration: BoxDecoration(
+                color: cat.color,
+                borderRadius: BorderRadius.circular(24.r),
+                boxShadow: (Skeletonizer.maybeOf(context)?.enabled ?? false)
+                    ? null
+                    : [
+                        BoxShadow(
+                          color: cat.color.withValues(alpha: 0.25),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
               ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Icon(
-                cat.icon,
-                color: AppColors.white,
-                size: 18.sp,
+              child: Row(
+                children: [
+                  Icon(
+                    cat.icon,
+                    color: AppColors.white,
+                    size: 18.sp,
+                  ),
+                  SizedBox(width: 8.w),
+                  Text(
+                    cat.name,
+                    style: AppTextStyles.font15WhiteRegular.copyWith(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.white,
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(width: 8.w),
-              Text(
-                cat.name,
-                style: AppTextStyles.font15WhiteRegular.copyWith(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.white,
-                ),
-              ),
-            ],
+            ),
           ),
         );
       },

@@ -9,6 +9,7 @@ import 'package:event_hup/features/home/ui/widgets/upcoming_events_list.dart';
 import 'package:event_hup/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class HomeContent extends StatelessWidget {
   const 
@@ -80,17 +81,20 @@ HomeContent({super.key,
             context,
             title: S.of(context).upcomingEvents,
             onSeeAll: () {},
-          ),
+          ).animate().fade(duration: 400.ms, delay: 200.ms).slideY(begin: 0.2, end: 0),
           SizedBox(height: 16.h),
-          UpcomingEventsList(events: safeUpcoming),
+          UpcomingEventsList(events: safeUpcoming)
+              .animate()
+              .fade(duration: 400.ms, delay: 250.ms)
+              .slideX(begin: 0.1, end: 0),
 
           SizedBox(height: 24.h),
 
           // Invitation Banner
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            child: InviteBanner(),
-          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: const InviteBanner(),
+          ).animate().fade(duration: 400.ms, delay: 300.ms).scale(begin: const Offset(0.95, 0.95), end: const Offset(1, 1)),
 
           SizedBox(height: 24.h),
 
@@ -99,9 +103,12 @@ HomeContent({super.key,
             context,
             title: S.of(context).nearbyYou,
             onSeeAll: () {},
-          ),
+          ).animate().fade(duration: 400.ms, delay: 350.ms).slideY(begin: 0.2, end: 0),
           SizedBox(height: 16.h),
-          NearbyEventsList(events: safeNearby),
+          NearbyEventsList(events: safeNearby)
+              .animate()
+              .fade(duration: 400.ms, delay: 400.ms)
+              .slideY(begin: 0.1, end: 0),
 
           SizedBox(height: 100.h),
         ],
