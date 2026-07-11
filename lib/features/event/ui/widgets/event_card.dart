@@ -126,7 +126,23 @@ class EventCard extends StatelessWidget {
                   ),
                 ),
               ),
-           
+              // Bookmark Button
+              Positioned(
+                right: 10.w,
+                top: 10.h,
+                child: Container(
+                  padding: EdgeInsets.all(6.r),
+                  decoration: BoxDecoration(
+                    color: AppColors.white.withValues(alpha: 0.9),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.bookmark_border,
+                    color: AppColors.primary,
+                    size: 18.sp,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
